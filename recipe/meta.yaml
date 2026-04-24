@@ -7,26 +7,28 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/geospark-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/geospark-{{ version }}.tar.gz
   sha256: ab6157297f6d395001305b1e21f1a4cca75e169c704b3de998bbc260095900a3
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
   run:
     - attrs
     - findspark
     - pyspark
-    - python >=3.6
+    - python >={{ python_min }}
     - shapely
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - geospark
     - geospark.core
